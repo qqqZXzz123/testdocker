@@ -1,9 +1,11 @@
-FROM microsoft/aspnetcore:2.0
+FROM debian:stable-slim
     
 ARG DEBIAN_FRONTEND=noninteractive
 
 
-RUN apt-get update -y
+
+RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+RUN dpkg -i packages-microsoft-prod.deb
 
 RUN apt-get update \
     && apt-get install -y \
@@ -17,7 +19,10 @@ RUN apt-get update \
     ca-certificates \
     locales \
     git \
+    dotnet-sdk-8.0 \
+    aspnetcore-runtime-8.0 \
     && useradd -d /home/container -m container
+
 
 RUN locale-gen ru_RU.UTF-8
 ENV LANG ru_RU.UTF-8
