@@ -4,8 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 
 
-RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-RUN dpkg -i packages-microsoft-prod.deb
+
 
 RUN apt-get update \
     && apt-get install -y \
@@ -19,9 +18,12 @@ RUN apt-get update \
     ca-certificates \
     locales \
     git \
-    dotnet-sdk-8.0 \
-    aspnetcore-runtime-8.0 \
     && useradd -d /home/container -m container
+
+RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+RUN dpkg -i packages-microsoft-prod.deb
+RUN apt-get update -y
+RUN apt-get install -y dotnet-sdk-8.0 aspnetcore-runtime-8.0 
 
 
 RUN locale-gen ru_RU.UTF-8
