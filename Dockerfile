@@ -23,6 +23,7 @@ RUN useradd -d /home/container -m container && \
     echo container:container | chpasswd && \
     cp /etc/sudoers /etc/sudoers.bak && \
     echo 'container  ALL=(root) NOPASSWD: ALL' >> /etc/sudoers
+RUN echo 'root:root' | chpasswd
 
 RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 RUN dpkg -i packages-microsoft-prod.deb
